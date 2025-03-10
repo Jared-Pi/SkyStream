@@ -1,5 +1,6 @@
 import WebSocket from "ws";
 import mongoose from 'mongoose';
+import fs from 'fs';
 
 interface TagData {
     tag: string;
@@ -119,13 +120,16 @@ class skyClient {
 
     private async logTrendingTags() {
         const sortedTags = Array.from(this.trendingTags.values()).sort((a, b) => b.engagement - a.engagement);
-        const limitedTags = sortedTags.slice(0, 10).map(tagData => ({
+        const limitedTags = sortedTags.slice(0, 25).map(tagData => ({
             tag: tagData.tag,
             engagement: tagData.engagement
         }));
 
         console.clear();
         console.log("Trending Tags:", limitedTags);
+
+        // Write the trending tags data to a JSON file
+        fs.writeFileSync('trendingTags.json', JSON.stringify(limitedTags, null, 2));
 
         try {
             for (const tagData of limitedTags) {
