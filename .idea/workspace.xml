@@ -19,6 +19,15 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Jared-Pi/SkyStream.git",
+    "accountId": "41830cd4-7a0d-43d8-bbec-17c94764f4ba"
+  }
+}]]></component>
   <component name="KubernetesApiPersistence">{}</component>
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
@@ -40,6 +49,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "E:/JetBrains/IntelliJ IDEA 2023.2/IdeaProjects/SQLiteJDBC",
@@ -110,7 +120,7 @@
       <workItem from="1740337429324" duration="2325000" />
       <workItem from="1740862418884" duration="3445000" />
       <workItem from="1741529835902" duration="35455000" />
-      <workItem from="1741568855815" duration="2110000" />
+      <workItem from="1741568855815" duration="2500000" />
     </task>
     <servers />
   </component>
