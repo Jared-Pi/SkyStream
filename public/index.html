@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trending Tags Visualization </title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<h1 id="runtimeHeading">Trending Tags</h1>
+<script>
+  const startTime = new Date(); // Record the start time
+
+  function updateHeading() {
+    const now = new Date();
+    const elapsedTime = Math.floor((now - startTime) / 1000); // Elapsed time in seconds
+    const hours = Math.floor(elapsedTime / 3600);
+    const minutes = Math.floor((elapsedTime % 3600) / 60);
+    const seconds = elapsedTime % 60;
+
+    // Update the heading with the elapsed time
+    document.getElementById('runtimeHeading').textContent =
+            `Trending Tags in the past (Running for ${hours}h ${minutes}m ${seconds}s)`;
+  }
+
+</script>
+<canvas id="tagsChart" width="400" height="170"></canvas>
+<script>
+  let chart;
+
+  // Function to fetch data and update the chart
+  function fetchDataAndUpdateChart() {
+    fetch('/api/trending-tags')
+            .then(response => response.json())
+            .then(data => {
+              const tags = data.map(item => item.tag);
+              const engagements = data.map(item => item.engagement);
+
+              if (chart) {
+                // Update chart data
+                chart.data.labels = tags;
+                chart.data.datasets[0].data = engagements;
+                chart.update(); // Re-render the chart
+              } else {
+                // Create the chart if it doesn't exist
+                const ctx = document.getElementById('tagsChart').getContext('2d');
+                chart = new Chart(ctx, {
+                  type: 'bar',
+                  data: {
+                    labels: tags,
+                    datasets: [{
+                      label: 'Engagement',
+                      data: engagements,
+                      backgroundColor: 'rgba(75, 200, 200, .5)',
+                      borderColor: 'rgba(75, 200, 200, 1)',
+                      borderWidth: 3
+                    }]
+                  },
+                  options: {
+                    scales: {
+                      y: {
+                        beginAtZero: true
+                      }
+                    }
+                  }
+                });
+              }
+            })
+            .catch(error => console.error('Error fetching data:', error));
+  }
+
+  // Fetch data initially and then every 5 seconds
+  fetchDataAndUpdateChart();
+  setInterval(fetchDataAndUpdateChart, 5000);
+</script>
+
+<script>
+  function updateHeading() {
+    fetch('/api/elapsed-time')
+            .then(response => response.json())
+            .then(data => {
+              const { hours, minutes, seconds } = data;
+              document.getElementById('runtimeHeading').textContent =
+                      `Trending Tags (Running for ${hours}h ${minutes}m ${seconds}s)`;
+            })
+            .catch(error => console.error('Error fetching elapsed time:', error));
+  }
+
+  // Update the heading every second
+  setInterval(updateHeading, 1000);
+</script>
+</body>
+</html>

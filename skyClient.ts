@@ -1,6 +1,24 @@
 import WebSocket from "ws";
-import mongoose from 'mongoose';
-import fs from 'fs';
+import * as fs from 'fs';
+import * as path from 'path';
+
+function handlePost(data: any) {
+    const filePath = path.join(__dirname, 'receivedPosts.json');
+
+    try {
+        // Ensure the directory exists
+        const dir = path.dirname(filePath);
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir, { recursive: true });
+        }
+
+        // Write data to the file
+        fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8');
+        console.log('Data written successfully to receivedPosts.json');
+    } catch (error) {
+        console.error('Error writing to file:', error);
+    }
+}
 
 interface TagData {
     tag: string;
@@ -8,14 +26,10 @@ interface TagData {
     engagement: number;
 }
 
-// MongoDB Schema for Tags
-const tagSchema = new mongoose.Schema({
-    tag: { type: String, required: true, unique: true },
-    engagement: { type: Number, required: true }
-});
-
-// Create a Mongoose model
-const TagModel = mongoose.model('trending', tagSchema);
+// Write `startTime` to a JSON file
+const startTime = new Date().toISOString();
+const startTimeFilePath = path.join(__dirname, "startTime.json");
+fs.writeFileSync(startTimeFilePath, JSON.stringify({ startTime }), "utf-8");
 
 class skyClient {
     private ws: WebSocket;
@@ -27,30 +41,13 @@ class skyClient {
         this.receivedPosts = new Set<string>();
         this.trendingTags = new Map<string, TagData>();
 
-        // Connect to MongoDB
-        this.connectToMongoDB();
-
         this.ws.on('error', console.error);
         this.ws.on('open', this.onOpen.bind(this));
         this.ws.on('close', this.onClose.bind(this));
         this.ws.on('message', this.onMessage.bind(this));
 
-        // Log trending tags every 10 seconds
-        setInterval(this.logTrendingTags.bind(this), 10000);
-    }
-
-    private async connectToMongoDB() {
-        try {
-            await mongoose.connect('mongodb://localhost:27017/skystream', {
-                serverSelectionTimeoutMS: 5000,
-                socketTimeoutMS: 5000,
-                connectTimeoutMS: 5000,
-            });
-            console.log('Connected to MongoDB');
-        } catch (error) {
-            console.error('MongoDB connection error:', error);
-            process.exit(1);
-        }
+        // Log trending tags every 5 seconds
+        setInterval(this.logTrendingTags.bind(this), 5000);
     }
 
     private onOpen() {
@@ -59,8 +56,6 @@ class skyClient {
 
     private onClose() {
         console.log(`\nDisconnected.\n`);
-        mongoose.connection.close(); // Close MongoDB connection
-        process.exit(0);
     }
 
     private async onMessage(data: WebSocket.Data) {
@@ -100,6 +95,9 @@ class skyClient {
                 tagData.engagement++;
             }
         });
+        const receivedPosts = JSON.parse(fs.readFileSync('receivedPosts.json', 'utf8') || '[]');
+        receivedPosts.push({ postURI, tags });
+        fs.writeFileSync('receivedPosts.json', JSON.stringify(receivedPosts, null, 2));
     }
 
     private handleReply(postURI: string) {
@@ -111,11 +109,17 @@ class skyClient {
     }
 
     private updateEngagement(postURI: string) {
-        this.trendingTags.forEach(tagData => {
-            if (tagData.uris.has(postURI)) {
-                tagData.engagement++;
-            }
-        });
+        const receivedPosts = JSON.parse(fs.readFileSync('receivedPosts.json', 'utf8') || '[]');
+        const post = receivedPosts.find((p: any) => p.postURI === postURI);
+
+        if (post) {
+            post.tags.forEach((tag: string) => {
+                const tagData = this.trendingTags.get(tag);
+                if (tagData) {
+                    tagData.engagement++;
+                }
+            });
+        }
     }
 
     private async logTrendingTags() {
@@ -130,23 +134,6 @@ class skyClient {
 
         // Write the trending tags data to a JSON file
         fs.writeFileSync('trendingTags.json', JSON.stringify(limitedTags, null, 2));
-
-        try {
-            for (const tagData of limitedTags) {
-                // Upsert the tag data (update if exists, insert if not)
-                await TagModel.findOneAndUpdate(
-                    { tag: tagData.tag }, // Filter by tag
-                    { engagement: tagData.engagement }, // Update engagement
-                    { upsert: true, new: true } // Upsert option
-                );
-            }
-        } catch (error) {
-            console.error('MongoDB update error:', error);
-        }
-    }
-
-    public getTrendingTags(): TagData[] {
-        return Array.from(this.trendingTags.values()).sort((a, b) => b.engagement - a.engagement);
     }
 }
 

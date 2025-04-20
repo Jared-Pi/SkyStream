@@ -1,16 +1,36 @@
-import express from "express";
-import cookieParser from "cookie-parser";
-
+const express = require('express');
+const path = require('path');
+const fs = require('fs');
 
 const app = express();
-const port = 3000;
+const PORT = 3000;
 
-app.use(cookieParser());
+// Read startTime from the JSON file
+const startTimeFilePath = path.join(__dirname, "startTime.json");
+const { startTime } = JSON.parse(fs.readFileSync(startTimeFilePath, "utf-8"));
+const startTimeDate = new Date(startTime);
 
-app.get('/', (req, res) => {
-    res.send('Demo');
+// Serve static files (e.g., HTML, JS, CSS)
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Endpoint to get elapsed time
+app.get("/api/elapsed-time", (req, res) => {
+    const now = new Date();
+    const elapsedTime = Math.floor((now - startTimeDate) / 1000); // Elapsed time in seconds
+    const hours = Math.floor(elapsedTime / 3600);
+    const minutes = Math.floor((elapsedTime % 3600) / 60);
+    const seconds = elapsedTime % 60;
+
+    res.json({ hours, minutes, seconds, elapsedTime });
 });
 
-app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
+// Endpoint to get trending tags data
+app.get('/api/trending-tags', (req, res) => {
+    const data = JSON.parse(fs.readFileSync('trendingTags.json', 'utf-8'));
+    res.json(data);
+});
+
+// Start the server
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
 });

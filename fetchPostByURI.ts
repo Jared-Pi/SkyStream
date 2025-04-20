@@ -22,21 +22,3 @@ export async function fetchPost(uri: string) {
         return { post: undefined, hasEnLang: false };
     }
 }
-
-//Test function
-/*
-const exampleURI = 'https://bsky.app/profile/stimpycole.bsky.social/post/3lipehsfry22e';
-async function getPost(uri: string) {
-    const tmppost = await fetchPost(uri);
-    const likeTags = String(tmppost?.post).match(/#\w+/g) || [];
-    console.log(tmppost.html);
-    console.log(tmppost.post);
-    console.log(tmppost.hasEnLang);
-    console.log(likeTags);
-}
-getPost(exampleURI);
-
-fetch('https://bsky.app/profile/did:plc:fexcbzwhzb55f6ojnuy7w4q6/post/3lipd42qn2c2y')
-    .then((response) => response.json())
-    .then((data) => console.log(data));
-*/
