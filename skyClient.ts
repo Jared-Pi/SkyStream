@@ -2,24 +2,6 @@ import WebSocket from "ws";
 import * as fs from 'fs';
 import * as path from 'path';
 
-function handlePost(data: any) {
-    const filePath = path.join(__dirname, 'receivedPosts.json');
-
-    try {
-        // Ensure the directory exists
-        const dir = path.dirname(filePath);
-        if (!fs.existsSync(dir)) {
-            fs.mkdirSync(dir, { recursive: true });
-        }
-
-        // Write data to the file
-        fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8');
-        console.log('Data written successfully to receivedPosts.json');
-    } catch (error) {
-        console.error('Error writing to file:', error);
-    }
-}
-
 interface TagData {
     tag: string;
     uris: Set<string>;
