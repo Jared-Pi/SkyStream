@@ -4,13 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2acd49ff-815b-4fa9-abfc-98f68c7a87cc" name="Changes" comment="Cleanup">
-      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+    <list default="true" id="2acd49ff-815b-4fa9-abfc-98f68c7a87cc" name="Changes" comment="Docker integration">
+      <change afterPath="$PROJECT_DIR$/Jenkinsfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-compose.prod.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/receivedPosts.json" beforeDir="false" afterPath="$PROJECT_DIR$/receivedPosts.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skyClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/skyClient.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/startTime.json" beforeDir="false" afterPath="$PROJECT_DIR$/startTime.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trendingTags.json" beforeDir="false" afterPath="$PROJECT_DIR$/trendingTags.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.monitoring.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.staging.yml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -146,7 +146,7 @@
       <workItem from="1741568855815" duration="5359000" />
       <workItem from="1743360097741" duration="95000" />
       <workItem from="1743360780013" duration="6013000" />
-      <workItem from="1745095364789" duration="38940000" />
+      <workItem from="1745095364789" duration="40189000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />
@@ -204,7 +204,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745148977384</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Docker integration">
+      <option name="closed" value="true" />
+      <created>1745170226308</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1745170226308</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -226,7 +234,9 @@
     <MESSAGE value="TrendingTags demo" />
     <MESSAGE value="Cleanup and data visualization" />
     <MESSAGE value="Cleanup" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cleanup" />
+    <MESSAGE value="Docker intergration" />
+    <MESSAGE value="Docker integration" />
+    <option name="LAST_COMMIT_MESSAGE" value="Docker integration" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
