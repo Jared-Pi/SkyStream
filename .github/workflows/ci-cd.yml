@@ -60,7 +60,7 @@ jobs:
       # Deploy the Docker container
       - name: Deploy to server
         run: |
-          docker pull skystream:latest
+          docker pull ${{ secrets.DOCKER_USERNAME }}/skystream:latest
           docker stop skystream || true
           docker rm -f skystream || true
-          docker run -d --name skystream -p 3000:3000 skystream:latest
+          docker run -d --name skystream -p 3000:3000 ${{ secrets.DOCKER_USERNAME }}/skystream:latest
