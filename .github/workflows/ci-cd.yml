@@ -55,10 +55,9 @@ jobs:
     needs: docker
 
     steps:
-      # Deploy the Docker container
       - name: Deploy Docker container
         run: |
-          docker pull skystream-app:latest
+          docker pull ${{ secrets.DOCKER_USERNAME }}/skystream-app:latest
           docker stop skystream || true
           docker rm -f skystream || true
-          docker run -d --name skystream -p 3000:3000 skystream-app:latest
+          docker run -d --name skystream -p 3000:3000 ${{ secrets.DOCKER_USERNAME }}/skystream-app:latest

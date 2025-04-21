@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="2acd49ff-815b-4fa9-abfc-98f68c7a87cc" name="Changes" comment="CI/CD pipeline">
       <change beforePath="$PROJECT_DIR$/.github/workflows/ci-cd.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/ci-cd.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -144,7 +143,7 @@
       <workItem from="1743360780013" duration="6013000" />
       <workItem from="1745095364789" duration="40189000" />
       <workItem from="1745197266984" duration="191000" />
-      <workItem from="1745197492690" duration="13195000" />
+      <workItem from="1745197492690" duration="13565000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />
@@ -370,7 +369,23 @@
       <option name="project" value="LOCAL" />
       <updated>1745210799384</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="CI/CD pipeline">
+      <option name="closed" value="true" />
+      <created>1745211448623</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1745211448623</updated>
+    </task>
+    <task id="LOCAL-00030" summary="CI/CD pipeline">
+      <option name="closed" value="true" />
+      <created>1745211554940</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1745211554940</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
