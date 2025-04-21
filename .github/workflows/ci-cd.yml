@@ -62,5 +62,5 @@ jobs:
         run: |
           docker pull ${{ secrets.DOCKER_USERNAME }}/skystream:latest
           docker stop skystream || true
-          docker rm skystream || true
+          docker rm -f skystream || true
           docker run -d --name skystream -p 3000:3000 ${{ secrets.DOCKER_USERNAME }}/skystream:latest
