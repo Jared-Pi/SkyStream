@@ -22,25 +22,6 @@ jobs:
       - name: Run docker-compose up in detached mode
         run: docker-compose up --build -d
 
-      - name: Wait for services to be ready
-        shell: cmd
-        run: |
-          @echo off
-          :wait
-          curl -s http://localhost:3000/ >nul 2>nul
-          if %ERRORLEVEL% neq 0 (
-            echo Waiting for services...
-            timeout /t 5 >nul
-            goto wait
-          )
-          curl -s http://localhost:9090/query >nul 2>nul
-          if %ERRORLEVEL% neq 0 (
-            echo Waiting for services...
-            timeout /t 5 >nul
-            goto wait
-          )
-          echo Services are ready.
-
       - name: Check running containers
         run: docker ps
 
