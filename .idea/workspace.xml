@@ -91,6 +91,7 @@
       <recent name="E:\JetBrains\IntelliJ IDEA 2023.2\IdeaProjects\SkyStream\backup" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\JetBrains\IntelliJ IDEA 2023.2\IdeaProjects\SkyStream\usr\src\app" />
       <recent name="E:\JetBrains\IntelliJ IDEA 2023.2\IdeaProjects\SkyStream\public" />
     </key>
   </component>
@@ -144,7 +145,7 @@
       <workItem from="1743360780013" duration="6013000" />
       <workItem from="1745095364789" duration="40189000" />
       <workItem from="1745197266984" duration="191000" />
-      <workItem from="1745197492690" duration="17094000" />
+      <workItem from="1745197492690" duration="17895000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />
@@ -482,7 +483,23 @@
       <option name="project" value="LOCAL" />
       <updated>1745214975090</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="CI/CD pipeline">
+      <option name="closed" value="true" />
+      <created>1745215396787</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1745215396787</updated>
+    </task>
+    <task id="LOCAL-00044" summary="CI/CD pipeline">
+      <option name="closed" value="true" />
+      <created>1745215713328</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1745215713328</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -18,7 +18,7 @@ RUN chmod +x /usr/src/app/entrypoint.sh
 RUN npm run build
 
 # Set the entrypoint script
-ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
+ENTRYPOINT ["entrypoint.sh"]
 
 # Start the application
 CMD ["npm", "start"]
