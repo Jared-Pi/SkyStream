@@ -58,9 +58,9 @@ jobs:
 
     steps:
       # Deploy the Docker container
-      - name: Deploy to server
+      - name: Deploy Prometheus
         run: |
-          docker pull ${{ secrets.DOCKER_USERNAME }}/skystream:latest
-          docker stop skystream || true
-          docker rm -f skystream || true
-          docker run -d --name skystream -p 3000:3000 ${{ secrets.DOCKER_USERNAME }}/skystream:latest
+          docker pull prom/prometheus:latest
+          docker stop prometheus || true
+          docker rm -f prometheus || true
+          docker run -d --name prometheus -p 9090:9090 -v $(pwd)/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus:latest
