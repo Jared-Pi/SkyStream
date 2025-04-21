@@ -8,9 +8,27 @@
 </head>
 <body>
 <h1 id="runtimeHeading">Trending Tags</h1>
+<script>
+  const startTime = new Date(); // Record the start time
+
+  function updateHeading() {
+    const now = new Date();
+    const elapsedTime = Math.floor((now - startTime) / 1000); // Elapsed time in seconds
+    const hours = Math.floor(elapsedTime / 3600);
+    const minutes = Math.floor((elapsedTime % 3600) / 60);
+    const seconds = elapsedTime % 60;
+
+    // Update the heading with the elapsed time
+    document.getElementById('runtimeHeading').textContent =
+            `Trending Tags (Running for ${hours}h ${minutes}m ${seconds}s)`;
+  }
+  // Update the heading every second
+  setInterval(updateHeading, 1000);
+</script>
 <canvas id="tagsChart" width="400" height="170"></canvas>
 <script>
   let chart;
+
   // Function to fetch data and update the chart
   function fetchDataAndUpdateChart() {
     fetch('/api/trending-tags')
