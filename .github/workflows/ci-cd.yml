@@ -26,7 +26,7 @@ jobs:
         shell: cmd
         run: |
           :wait
-          curl -s http://localhost:3000/ >nul 2>&1 && curl -s http://localhost:9090/query >nul 2>&1
+          curl -s http://localhost:3000/ && curl -s http://localhost:9090/query
           if %ERRORLEVEL%==0 (
             echo Services are ready.
             exit /b 0
