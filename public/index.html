@@ -8,27 +8,9 @@
 </head>
 <body>
 <h1 id="runtimeHeading">Trending Tags</h1>
-<script>
-  const startTime = new Date(); // Record the start time
-
-  function updateHeading() {
-    fetch('/api/elapsed-time')
-            .then(response => response.json())
-            .then(data => {
-              const { hours, minutes, seconds } = data;
-              document.getElementById('runtimeHeading').textContent =
-                      `Trending Tags (Running for ${hours}h ${minutes}m ${seconds}s)`;
-            })
-            .catch(error => console.error('Error fetching elapsed time:', error));
-  }
-
-  // Update the heading every second
-  setInterval(updateHeading, 1000);
-</script>
 <canvas id="tagsChart" width="400" height="170"></canvas>
 <script>
   let chart;
-
   // Function to fetch data and update the chart
   function fetchDataAndUpdateChart() {
     fetch('/api/trending-tags')
