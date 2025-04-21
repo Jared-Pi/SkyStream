@@ -37,7 +37,7 @@ const register = new client.Registry();
 // Enable collection of default metrics (CPU, memory, etc.)
 client.collectDefaultMetrics({ register });
 
-// Define a custom metric (optional)
+// Define a custom metric
 const requestCounter = new client.Counter({
     name: 'http_requests_total',
     help: 'Total number of HTTP requests',
