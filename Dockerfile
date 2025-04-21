@@ -10,8 +10,8 @@ RUN npm install -g typescript
 
 COPY . .
 
-# Copy the entrypoint script
-COPY entrypoint.sh /usr/src/app/entrypoint.sh
+# Copy the entrypoint script from the root of the project
+COPY ./entrypoint.sh /usr/src/app/entrypoint.sh
 RUN chmod +x /usr/src/app/entrypoint.sh
 
 # Compile TypeScript
