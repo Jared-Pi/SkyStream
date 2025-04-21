@@ -1,17 +1,11 @@
 import WebSocket from "ws";
 import * as fs from 'fs';
-import * as path from 'path';
 
 interface TagData {
     tag: string;
     uris: Set<string>;
     engagement: number;
 }
-
-// Write `startTime` to a JSON file
-const startTime = new Date().toISOString();
-const startTimeFilePath = path.join(__dirname, "startTime.json");
-fs.writeFileSync(startTimeFilePath, JSON.stringify({ startTime }), "utf-8");
 
 class skyClient {
     private ws: WebSocket;

@@ -1,15 +1,12 @@
 const express = require('express');
 const path = require('path');
 const client = require('prom-client');
-const fs = require('fs');
 
 const app = express();
 const PORT = 3000;
 
-// Read startTime from the JSON file
-const startTimeFilePath = path.join(__dirname, "startTime.json");
-const { startTime } = JSON.parse(fs.readFileSync(startTimeFilePath, "utf-8"));
-const startTimeDate = new Date(startTime);
+// Record the start time when the server starts
+const startTimeDate = new Date();
 
 // Serve static files (e.g., HTML, JS, CSS)
 app.use(express.static(path.join(__dirname, 'public')));
