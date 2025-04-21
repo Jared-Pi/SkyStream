@@ -16,5 +16,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Clean up Docker containers
+        run: docker-compose down
+
       - name: Run docker-compose up locally
-        run: docker-compose up --build
+        run: docker-compose up --build -d
+
+      - name: Check container logs
+        run: docker-compose logs
