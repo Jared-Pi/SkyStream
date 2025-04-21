@@ -1,45 +1,48 @@
 pipeline {
     agent any
+
     environment {
-        DOCKER_HOST = "tcp://host.docker.internal:2375"
+        // For Windows Docker Desktop
+        DOCKER_BUILDKIT = "0"  // Disables BuildKit for better Windows compatibility
     }
+
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/Jared-Pi/SkyStream.git'
+                git branch: 'main',
+                url: 'https://github.com/Jared-Pi/SkyStream.git'
             }
         }
 
         stage('Build') {
             steps {
-                script {
-                    docker.build("skystream:${env.BUILD_ID}", ".")
-                }
+                bat 'docker build -t skystream .'
             }
         }
 
         stage('Test') {
             steps {
-                script {
-                    docker.image("skystream:${env.BUILD_ID}").inside('-v /tmp:/tmp') {
-                        dir('/app') {  // Match your WORKDIR in Dockerfile
-                            sh 'npm test'
-                        }
-                    }
-                }
+                bat 'docker run --rm skystream npm test'
             }
         }
 
         stage('Deploy') {
             steps {
-                sh 'docker-compose -f docker-compose.prod.yml up -d --build'
+                bat 'docker-compose -f docker-compose.prod.yml up -d --build'
             }
         }
     }
 
     post {
+        success {
+            bat 'echo "Deployment successful!"'
+        }
+        failure {
+            bat 'echo "Pipeline failed! Check logs."'
+        }
         always {
-            sh 'docker system prune -f'
+            // Clean up unused containers/images
+            bat 'docker system prune -f'
         }
     }
 }
