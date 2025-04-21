@@ -9,6 +9,8 @@ services:
       - "9090:9090"
     depends_on:
       - skystream
+    networks:
+      - skystream_network
 
   skystream:
     build: .
@@ -16,3 +18,9 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=production
+    networks:
+      - skystream_network
+
+networks:
+  skystream_network:
+    driver: bridge

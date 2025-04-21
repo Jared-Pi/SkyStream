@@ -4,4 +4,4 @@ global:
 scrape_configs:
   - job_name: 'skystream-app'
     static_configs:
-      - targets: ['skystream:3000']
+      - targets: ['localhost:3000']
