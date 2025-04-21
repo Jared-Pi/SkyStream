@@ -1,11 +1,9 @@
 pipeline {
     agent any
-
     environment {
-        // For Windows Docker Desktop
-        DOCKER_BUILDKIT = "0"  // Disables BuildKit for better Windows compatibility
+        // Force using Windows paths
+        COMPOSE_CONVERT_WINDOWS_PATHS = "1"
     }
-
     stages {
         stage('Checkout') {
             steps {
@@ -32,16 +30,8 @@ pipeline {
             }
         }
     }
-
     post {
-        success {
-            bat 'echo "Deployment successful!"'
-        }
-        failure {
-            bat 'echo "Pipeline failed! Check logs."'
-        }
         always {
-            // Clean up unused containers/images
             bat 'docker system prune -f'
         }
     }
