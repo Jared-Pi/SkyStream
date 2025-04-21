@@ -58,9 +58,9 @@ jobs:
 
     steps:
       # Deploy the Docker container
-      - name: Deploy Prometheus
-        run: |
-          docker pull prom/prometheus:latest
-          docker stop prometheus || true
-          docker rm -f prometheus || true
-          docker run -d --name prometheus -p 9090:9090 -v $(pwd)/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus:latest
+    - name: Deploy Prometheus
+    run: |
+      docker pull prom/prometheus:latest
+      docker stop prometheus || true
+      docker rm -f prometheus || true
+      docker run -d --name prometheus -p 9090:9090 -v $(pwd)/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus:latest
