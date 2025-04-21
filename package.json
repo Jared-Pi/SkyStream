@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "build": "tsc",
+    "start": "node server.js & node dist/skyClient.js"
   },
   "keywords": [],
   "author": "",
@@ -28,6 +29,7 @@
     "@types/express": "^5.0.1",
     "@types/node": "^22.13.10",
     "@types/ws": "^8.5.14",
-    "nodemon": "^3.1.9"
+    "nodemon": "^3.1.9",
+    "typescript": "^5.8.3"
   }
 }
