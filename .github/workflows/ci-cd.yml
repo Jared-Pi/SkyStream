@@ -49,10 +49,8 @@ jobs:
       # Build and push Docker image
       - name: Build and push Docker image
         run: |
-          docker pull prom/prometheus:latest
-          docker stop prometheus || true
-          docker rm -f prometheus || true
-          docker run -d --name prometheus -p 9090:9090 -v $(pwd)/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus:latest
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/skystream:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/skystream:latest
 
   deploy:
     runs-on: ubuntu-latest
@@ -60,11 +58,9 @@ jobs:
 
     steps:
       # Deploy the Docker container
-      - name: Deploy Prometheus
+      - name: Deploy Docker container
         run: |
-          docker pull prom/prometheus:latest
-          docker stop prometheus || true
-          docker rm -f prometheus || true
-          docker run -d --name prometheus -p 9090:9090 \
-            -v ${{ github.workspace }}/prometheus.yml:/etc/prometheus/prometheus.yml:ro \
-            prom/prometheus:latest
+          docker pull ${{ secrets.DOCKER_USERNAME }}/skystream:latest
+          docker stop skystream || true
+          docker rm -f skystream || true
+          docker run -d --name skystream -p 3000:3000 ${{ secrets.DOCKER_USERNAME }}/skystream:latest
