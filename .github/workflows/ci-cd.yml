@@ -57,13 +57,10 @@ jobs:
     needs: docker
 
     steps:
-      # Deploy the Docker container (example for SSH-based deployment)
+      # Deploy the Docker container
       - name: Deploy to server
-        uses: appleboy/ssh-action@v0.1.8
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          script: |
-            docker pull ${{ secrets.DOCKER_USERNAME }}/skystream:latest
-            docker stop skystream || true
-            docker rm skystream || true
-            docker run -d --name skystream -p 3000:3000 ${{ secrets.DOCKER_USERNAME }}/skystream:latest
+        run: |
+          docker pull ${{ secrets.DOCKER_USERNAME }}/skystream:latest
+          docker stop skystream || true
+          docker rm skystream || true
+          docker run -d --name skystream -p 3000:3000 ${{ secrets.DOCKER_USERNAME }}/skystream:latest
