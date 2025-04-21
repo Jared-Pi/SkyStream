@@ -23,11 +23,17 @@ jobs:
         run: docker-compose up --build -d
 
       - name: Wait for services to be ready
+        shell: pwsh
         run: |
-          until curl -s http://localhost:3000/ && curl -s http://localhost:9090/query; do
-            echo "Waiting for services..."
-            sleep 5
-          done
+          do {
+            $response1 = Invoke-WebRequest -Uri http://localhost:3000/ -UseBasicParsing -ErrorAction SilentlyContinue
+            $response2 = Invoke-WebRequest -Uri http://localhost:9090/query -UseBasicParsing -ErrorAction SilentlyContinue
+            if ($response1.StatusCode -eq 200 -and $response2.StatusCode -eq 200) {
+              break
+            }
+            Write-Host "Waiting for services..."
+            Start-Sleep -Seconds 5
+          } while ($true)
 
       - name: Check running containers
         run: docker ps
