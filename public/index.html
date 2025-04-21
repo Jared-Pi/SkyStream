@@ -12,17 +12,18 @@
   const startTime = new Date(); // Record the start time
 
   function updateHeading() {
-    const now = new Date();
-    const elapsedTime = Math.floor((now - startTime) / 1000); // Elapsed time in seconds
-    const hours = Math.floor(elapsedTime / 3600);
-    const minutes = Math.floor((elapsedTime % 3600) / 60);
-    const seconds = elapsedTime % 60;
-
-    // Update the heading with the elapsed time
-    document.getElementById('runtimeHeading').textContent =
-            `Trending Tags in the past (Running for ${hours}h ${minutes}m ${seconds}s)`;
+    fetch('/api/elapsed-time')
+            .then(response => response.json())
+            .then(data => {
+              const { hours, minutes, seconds } = data;
+              document.getElementById('runtimeHeading').textContent =
+                      `Trending Tags (Running for ${hours}h ${minutes}m ${seconds}s)`;
+            })
+            .catch(error => console.error('Error fetching elapsed time:', error));
   }
 
+  // Update the heading every second
+  setInterval(updateHeading, 1000);
 </script>
 <canvas id="tagsChart" width="400" height="170"></canvas>
 <script>
@@ -72,22 +73,6 @@
   // Fetch data initially and then every 5 seconds
   fetchDataAndUpdateChart();
   setInterval(fetchDataAndUpdateChart, 5000);
-</script>
-
-<script>
-  function updateHeading() {
-    fetch('/api/elapsed-time')
-            .then(response => response.json())
-            .then(data => {
-              const { hours, minutes, seconds } = data;
-              document.getElementById('runtimeHeading').textContent =
-                      `Trending Tags (Running for ${hours}h ${minutes}m ${seconds}s)`;
-            })
-            .catch(error => console.error('Error fetching elapsed time:', error));
-  }
-
-  // Update the heading every second
-  setInterval(updateHeading, 1000);
 </script>
 </body>
 </html>
