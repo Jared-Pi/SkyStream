@@ -7,8 +7,12 @@ services:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
       - "9090:9090"
+    depends_on:
+      - skystream
 
   skystream:
     build: .
     ports:
       - "3000:3000"
+    environment:
+      - NODE_ENV=production
