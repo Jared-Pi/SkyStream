@@ -42,6 +42,33 @@ const requestCounter = new client.Counter({
 });
 register.registerMetric(requestCounter);
 
+// Custom metric for tracking requests to /api/trending-tags
+const trendingTagsRequests = new client.Counter({
+    name: 'trending_tags_requests_total',
+    help: 'Total number of requests to /api/trending-tags',
+});
+register.registerMetric(trendingTagsRequests);
+
+// Middleware to count requests to /api/trending-tags
+app.use('/api/trending-tags', (req, res, next) => {
+    trendingTagsRequests.inc();
+    next();
+});
+
+// Custom metric for tracking the number of trending tags
+const trendingTagsCount = new client.Gauge({
+    name: 'trending_tags_count',
+    help: 'Number of trending tags returned by /api/trending-tags',
+});
+register.registerMetric(trendingTagsCount);
+
+// Update trendingTagsCount in the /api/trending-tags endpoint
+app.get('/api/trending-tags', (req, res) => {
+    const data = JSON.parse(fs.readFileSync('trendingTags.json', 'utf-8'));
+    trendingTagsCount.set(data.length); // Set the number of trending tags
+    res.json(data);
+});
+
 // Use middleware to count requests
 app.use((req, res, next) => {
     requestCounter.inc();
@@ -57,6 +84,23 @@ app.get('/metrics', async (req, res) => {
 // Your other routes
 app.get('/', (req, res) => {
     res.send('Hello from SkyStream!');
+});
+
+const requestDuration = new client.Histogram({
+    name: 'http_request_duration_seconds',
+    help: 'Duration of HTTP requests in seconds',
+    labelNames: ['method', 'route', 'status_code'],
+    buckets: [0.1, 0.5, 1, 2, 5] // Define buckets for response times
+});
+register.registerMetric(requestDuration);
+
+// Middleware to measure request duration
+app.use((req, res, next) => {
+    const end = requestDuration.startTimer();
+    res.on('finish', () => {
+        end({ method: req.method, route: req.route?.path || req.path, status_code: res.statusCode });
+    });
+    next();
 });
 
 
