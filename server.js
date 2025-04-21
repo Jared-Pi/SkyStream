@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const client = require('prom-client');
 const fs = require('fs');
 
 const app = express();
@@ -29,6 +30,37 @@ app.get('/api/trending-tags', (req, res) => {
     const data = JSON.parse(fs.readFileSync('trendingTags.json', 'utf-8'));
     res.json(data);
 });
+
+// Create a Registry to register the metrics
+const register = new client.Registry();
+
+// Enable collection of default metrics (CPU, memory, etc.)
+client.collectDefaultMetrics({ register });
+
+// Define a custom metric (optional)
+const requestCounter = new client.Counter({
+    name: 'http_requests_total',
+    help: 'Total number of HTTP requests',
+});
+register.registerMetric(requestCounter);
+
+// Use middleware to count requests
+app.use((req, res, next) => {
+    requestCounter.inc();
+    next();
+});
+
+// Expose metrics endpoint
+app.get('/metrics', async (req, res) => {
+    res.set('Content-Type', register.contentType);
+    res.end(await register.metrics());
+});
+
+// Your other routes
+app.get('/', (req, res) => {
+    res.send('Hello from SkyStream!');
+});
+
 
 // Start the server
 app.listen(PORT, () => {
