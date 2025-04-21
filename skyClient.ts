@@ -27,7 +27,7 @@ class skyClient {
     }
 
     private onOpen() {
-        console.log(`\nConnected.\n`);
+        console.log(`\nConnected.`);
     }
 
     private onClose() {
