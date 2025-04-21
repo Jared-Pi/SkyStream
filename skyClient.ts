@@ -31,7 +31,7 @@ class skyClient {
     }
 
     private onClose() {
-        console.log(`\nDisconnected.\n`);
+        console.log(`\nDisconnected.`);
     }
 
     private async onMessage(data: WebSocket.Data) {
