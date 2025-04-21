@@ -25,15 +25,21 @@ jobs:
       - name: Wait for services to be ready
         shell: cmd
         run: |
+          @echo off
           :wait
-          curl -s http://localhost:3000/ && curl -s http://localhost:9090/query
-          if %ERRORLEVEL%==0 (
-            echo Services are ready.
-            exit /b 0
+          curl -s http://localhost:3000/ >nul 2>nul
+          if %ERRORLEVEL% neq 0 (
+            echo Waiting for services...
+            timeout /t 5 >nul
+            goto wait
           )
-          echo Waiting for services...
-          timeout /t 5 >nul
-          goto wait
+          curl -s http://localhost:9090/query >nul 2>nul
+          if %ERRORLEVEL% neq 0 (
+            echo Waiting for services...
+            timeout /t 5 >nul
+            goto wait
+          )
+          echo Services are ready.
 
       - name: Check running containers
         run: docker ps
