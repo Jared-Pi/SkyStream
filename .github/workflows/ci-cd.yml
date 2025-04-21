@@ -49,8 +49,8 @@ jobs:
       # Build and push Docker image
       - name: Build and push Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/skystream:latest .
-          docker push ${{ secrets.DOCKER_USERNAME }}/skystream:latest
+          docker build -t skystream-app:latest .
+          docker push skystream-app:latest
 
   deploy:
     runs-on: ubuntu-latest
@@ -60,7 +60,7 @@ jobs:
       # Deploy the Docker container
       - name: Deploy Docker container
         run: |
-          docker pull ${{ secrets.DOCKER_USERNAME }}/skystream:latest
+          docker pull skystream-app:latest
           docker stop skystream || true
           docker rm -f skystream || true
-          docker run -d --name skystream -p 3000:3000 ${{ secrets.DOCKER_USERNAME }}/skystream:latest
+          docker run -d --name skystream -p 3000:3000 skystream-app:latest
