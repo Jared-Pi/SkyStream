@@ -6,6 +6,8 @@ const fs = require('fs');
 const app = express();
 const PORT = 3000;
 
+/** RUN USING "node server.js" IN TERMINAL **/
+
 // Record the start time when the server starts
 const startTimeDate = new Date();
 

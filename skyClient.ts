@@ -1,6 +1,8 @@
 import WebSocket from "ws";
 import * as fs from 'fs';
 
+/** RUN USING "npx ts-node skyClient.ts" IN TERMINAL **/
+
 interface TagData {
     tag: string;
     uris: Set<string>;
